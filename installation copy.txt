@@ -1,0 +1,108 @@
+#! /bin/bash
+
+
+#######################################
+# Email: theodondre@gmail.com
+# Twitter: @tsiameh
+# Instagram: @go_data_prof
+# Youtube: @godataprof
+#######################################
+
+########################################
+# 1. install cmake first
+#
+#             MAC OX
+#######################################
+$ brew install libusb pkg-config
+$ brew install homebrew/core/glfw3
+$ brew install cmake
+$ brew install openssl
+
+
+$ brew link --force openssl
+$ echo 'export PATH="/usr/local/opt/openssl@3/bin:$PATH"' >> ~/.zshrc
+$ export LDFLAGS="-L/usr/local/opt/openssl@3/lib"
+$ export CPPFLAGS="-I/usr/local/opt/openssl@3/include"
+$ export PKG_CONFIG_PATH="/usr/local/opt/openssl@3/lib/pkgconfig"
+
+$ git clone https://github.com/IntelRealSense/librealsense && librealsense
+$ mkdir build && build
+
+######################################
+# Example 1. or Example 2. All Works
+#####################################
+
+$ cmake ../ -DBUILD_PYTHON_BINDINGS=TRUE
+
+###################
+# Example 2.
+###################
+
+$ which python3
+
+$ cmake .. -DBUILD_EXAMPLES=true \
+  -DBUILD_WITH_OPENMP=false \
+  -DHWM_OVER_XU=false \
+  -DBUILD_PYTHON_BINDINGS=true \
+  -DCMAKE_USE_OPENSSL=ON \
+  -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl \
+  -DOPENSSL_LIBRARIES=/usr/local/opt/openssl/lib \
+  -DPYTHON_EXECUTABLE:FILEPATH=/usr/local/bin/python3 \
+  -G "Unix Makefiles"
+
+$ make -j4
+
+# Optional if you want the library to be installed in your system
+$ sudo make install 
+
+
+$ cd /usr/local/lib && ls
+
+##########################
+# To create a symbolic
+##########################
+
+# check your python version eg. 3.7, 3.8, 3.9, 3.10 etc
+$ cd /usr/local/lib/python3.8/site-packages 
+
+$ ln -s /usr/local/lib/pyrealsense2.cpython-37m-darwin.so pyrealsense2.so
+
+$ ln -s /usr/local/lib/pybackend2.cpython-37m-darwin.so pybackend2.so
+
+$ cd /usr/local/lib/python3.8/Site-packages
+
+
+# If it all goes without errors, you should be able to find the pyrealsense2.<arch info>.
+# so under build/wrappers/python (actually 3 files with the same name and extensions .so, .so.2, .so.2.8.1).
+# Now the easiest way to use it is run python from that folder and import pyrealsense2 from the terminal
+
+# Example:
+
+$ python3
+>>> import site
+>>> site.getsitepackages()
+>>> import pyrealsense2 as rs
+>>> import cv2                                # state of the art computer vision algorithms library
+>>> import numpy as np                        # fundamental package for scientific computing
+>>> import matplotlib.pyplot as plt           # 2D plotting library producing publication quality figures
+>>> import pyrealsense2 as rs                 # Intel RealSense cross-platform open-source API
+>>> print("Environment Ready")
+
+##########################################
+#         LINUX INSTALLATION
+#########################################
+
+#! /bin/bash
+
+$ git clone https://github.com/JetsonHacksNano/installLibrealsense
+
+$ cd installLibrealsense
+
+$ ./installLibrealsense.sh
+
+# Type this command from the terminal. Greate Job!
+$ realsense-viewer
+
+# Or visit
+# https://www.jetsonhacks.com/2019/12/22/install-realsense-camera-in-5-minutes-jetson-nano/
+
