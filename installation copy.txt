@@ -1,6 +1,5 @@
 #! /bin/bash
 
-
 #######################################
 # Email: theodondre@gmail.com
 # Twitter: @tsiameh
@@ -9,8 +8,6 @@
 #######################################
 
 ########################################
-# 1. install cmake first
-#
 #             MAC OX
 #######################################
 $ brew install libusb pkg-config
@@ -45,9 +42,22 @@ $ cmake .. -DBUILD_EXAMPLES=true \
   -DHWM_OVER_XU=false \
   -DBUILD_PYTHON_BINDINGS=true \
   -DCMAKE_USE_OPENSSL=ON \
+  -DBUILD_examples=ON \
   -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl \
   -DOPENSSL_LIBRARIES=/usr/local/opt/openssl/lib \
   -DPYTHON_EXECUTABLE:FILEPATH=/usr/local/bin/python3 \
+  -G "Unix Makefiles"
+
+
+ $ cmake .. -DBUILD_EXAMPLES=true \
+  -DBUILD_WITH_OPENMP=false \
+  -DHWM_OVER_XU=false \
+  -DBUILD_PYTHON_BINDINGS=true \
+  -DCMAKE_USE_OPENSSL=ON \
+  -DBUILD_examples=ON \
+  -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl \
+  -DOPENSSL_LIBRARIES=/usr/local/opt/openssl/lib \
+  -DPYTHON_EXECUTABLE:FILEPATH=/Users/tsiameh/anaconda3/bin/python \
   -G "Unix Makefiles"
 
 $ make -j4
@@ -88,6 +98,23 @@ $ python3
 >>> import pyrealsense2 as rs                 # Intel RealSense cross-platform open-source API
 >>> print("Environment Ready")
 
+
+
+$ brew install boost
+$ brew install eigen
+$ brew install flann
+$ brew install vtk5 –with-qt
+$ git clone https://github.com/PointCloudLibrary/pcl
+$ cd pcl
+$ mkdir build
+$ cd build
+$ cmake .. -DBUILD_EXAMPLES=true -DBUILD_WITH_OPENMP=false -DHWM_OVER_XU=false -DBUILD_PYTHON_BINDINGS=true -DPYTHON_EXECUTABLE:FILEPATH=/usr/local/bin/python3  -G "Unix Makefiles"
+$ make
+$ sudo make install
+
+$ cd librealsense/wrappers/python/examples
+$ python opencv_viewer_example.py
+
 ##########################################
 #         LINUX INSTALLATION
 #########################################
@@ -105,4 +132,3 @@ $ realsense-viewer
 
 # Or visit
 # https://www.jetsonhacks.com/2019/12/22/install-realsense-camera-in-5-minutes-jetson-nano/
-
